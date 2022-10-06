@@ -6,7 +6,7 @@
 /*   By: rbroque <rbroque@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 14:12:12 by rbroque           #+#    #+#             */
-/*   Updated: 2022/10/05 11:17:15 by rbroque          ###   ########.fr       */
+/*   Updated: 2022/10/05 15:24:51 by rbroque          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,15 @@
 
 int	main(int ac, char **av)
 {
+/*
+	char	*str;
+	char	*buffer = "";
+
+	(void)ac;
+	(void)av;
+	str = ft_strjoin("lol", dup_until(buffer, 'a'));
+	printf("%s", str);
+*/
 	int		fd;
 	char	*line;
 

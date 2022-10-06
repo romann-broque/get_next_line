@@ -6,7 +6,7 @@
 /*   By: rbroque <rbroque@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 14:10:54 by rbroque           #+#    #+#             */
-/*   Updated: 2022/10/05 11:16:48 by rbroque          ###   ########.fr       */
+/*   Updated: 2022/10/06 12:13:49 by rbroque          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,57 +18,56 @@ typedef enum e_line_status
 	VALID_LINE
 }	t_line_status;
 
-
-char	*dup_until(char *str, const char c)
+t_line_status	fill_line_from_rest(char **line, char **rest)
 {
-	size_t	i;
-	char	*dup;
+	size_t pos;
 
-	i = 0;
-	while (str[i] != '\0' && str[i] != c)
-		++i;
-	dup = (char *)malloc((i + 1) * sizeof(char));	
-	if (dup != NULL)
-		ft_strncpy(dup, str, i);
-	return (dup);
-}
-
-t_line_status	fill_line_from_rest(char **line, char rest[BUFFER_SIZE + 1])
-{
-	if (ft_strchr(rest, '\n') != NULL)
+	if (*rest != NULL)
 	{
-		*line = dup_until(rest, '\n');
-		return (VALID_LINE);
+		if (ft_strchr(*rest, '\n') != NULL)
+		{
+			pos = ft_strlenchr(*rest, '\n');
+			*line = ft_strndup(*rest, pos);
+			*rest = ft_strchr(*rest, '\n') + 1;
+			return (VALID_LINE);
+		}
+		else
+		{
+			if (**rest != '\0')
+				*line = ft_strdup(*rest);
+		}
 	}
-	else
-		return (INVALID_LINE);
+	return (INVALID_LINE);
 }
 
 t_line_status	fill_line_from_file(char **line,
-								char rest[BUFFER_SIZE + 1], const int fd)
+		char **rest, const int fd)
 {
+	size_t	pos;
 	char	buffer[BUFFER_SIZE + 1];
 
 	ft_bzero(buffer, BUFFER_SIZE + 1);
 	while (read(fd, buffer, BUFFER_SIZE) > 0)
 	{
-		rest = ft_strchr(buffer, '\n');
-		if (rest == NULL)
-			*line = ft_strjoin(*line, buffer);
+		pos = ft_strlenchr(buffer, '\n');
+		if (pos < BUFFER_SIZE)
+			*rest = ft_strndup(buffer + pos + 1, BUFFER_SIZE - pos - 1);
 		else
+			*rest = NULL;
+		*line = ft_strjoin(*line, ft_strndup(buffer, pos));
+		if (*rest != NULL)
 			break ;
-		ft_bzero(buffer, BUFFER_SIZE + 1);
 	}
 	return (VALID_LINE);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	rest[BUFFER_SIZE + 1] = EMPTY_STRING;
+	static char	*rest = NULL;
 	char		*line;
 
 	line = NULL;
-	if (fill_line_from_rest(&line, rest) == INVALID_LINE)
-		fill_line_from_file(&line, rest, fd);
+	if (fill_line_from_rest(&line, &rest) == INVALID_LINE)
+		fill_line_from_file(&line, &rest, fd);
 	return (line);
 }
