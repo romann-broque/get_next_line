@@ -6,7 +6,7 @@
 /*   By: rbroque <rbroque@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 14:12:12 by rbroque           #+#    #+#             */
-/*   Updated: 2022/10/06 17:04:48 by rbroque          ###   ########.fr       */
+/*   Updated: 2022/10/06 17:21:38 by rbroque          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,6 @@ int	main(int ac, char **av)
 	int		fd;
 	char	*line;
 
-/*
-	(void)ac;
-	(void)av;
-	fd = STDIN_FILENO;
-*/
 	if (ac == 1 || (fd = open(av[1], O_RDONLY)) == -1)
 		return (EXIT_FAILURE);
 	line = get_next_line(fd);
