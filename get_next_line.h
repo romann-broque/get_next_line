@@ -6,7 +6,7 @@
 /*   By: rbroque <rbroque@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 14:09:26 by rbroque           #+#    #+#             */
-/*   Updated: 2022/10/06 16:51:17 by rbroque          ###   ########.fr       */
+/*   Updated: 2022/10/06 17:00:25 by rbroque          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,6 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 
-# include <stdio.h>
-
-# define BUFFER_SIZE 5
 # define EMPTY_STRING ""
 
 char	*ft_strncpy(char *dest, char *src, size_t size);
