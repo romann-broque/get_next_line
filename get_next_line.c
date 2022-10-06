@@ -6,7 +6,7 @@
 /*   By: rbroque <rbroque@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 14:10:54 by rbroque           #+#    #+#             */
-/*   Updated: 2022/10/06 12:13:49 by rbroque          ###   ########.fr       */
+/*   Updated: 2022/10/06 14:47:12 by rbroque          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_line_status	fill_line_from_rest(char **line, char **rest)
 		if (ft_strchr(*rest, '\n') != NULL)
 		{
 			pos = ft_strlenchr(*rest, '\n');
-			*line = ft_strndup(*rest, pos);
+			*line = ft_strndup(*rest, pos + 1);
 			*rest = ft_strchr(*rest, '\n') + 1;
 			return (VALID_LINE);
 		}
@@ -43,20 +43,23 @@ t_line_status	fill_line_from_rest(char **line, char **rest)
 t_line_status	fill_line_from_file(char **line,
 		char **rest, const int fd)
 {
-	size_t	pos;
+	ssize_t	read_bytes;
+	ssize_t	pos;
 	char	buffer[BUFFER_SIZE + 1];
 
 	ft_bzero(buffer, BUFFER_SIZE + 1);
-	while (read(fd, buffer, BUFFER_SIZE) > 0)
+	read_bytes = read(fd, buffer, BUFFER_SIZE);
+	while (read_bytes > 0)
 	{
 		pos = ft_strlenchr(buffer, '\n');
-		if (pos < BUFFER_SIZE)
-			*rest = ft_strndup(buffer + pos + 1, BUFFER_SIZE - pos - 1);
+		if (pos < read_bytes)
+			*rest = ft_strndup(buffer + pos + 1, read_bytes - pos - 1);
 		else
 			*rest = NULL;
-		*line = ft_strjoin(*line, ft_strndup(buffer, pos));
+		*line = ft_strjoin(*line, ft_strndup(buffer, pos + 1));
 		if (*rest != NULL)
 			break ;
+		read_bytes = read(fd, buffer, BUFFER_SIZE);
 	}
 	return (VALID_LINE);
 }
