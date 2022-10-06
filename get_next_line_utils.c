@@ -6,25 +6,11 @@
 /*   By: rbroque <rbroque@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 14:11:44 by rbroque           #+#    #+#             */
-/*   Updated: 2022/10/06 11:33:59 by rbroque          ###   ########.fr       */
+/*   Updated: 2022/10/06 16:51:03 by rbroque          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-char	*ft_strcpy(char *dest, char *src)
-{
-	size_t	i;
-
-	i = 0;
-	while (src[i] != '\0')
-	{
-		dest[i] = src[i];
-		++i;
-	}
-	dest[i] = '\0';
-	return (dest);
-}
 
 char	*ft_strncpy(char *dest, char *src, size_t size)
 {
@@ -40,6 +26,16 @@ char	*ft_strncpy(char *dest, char *src, size_t size)
 	return (dest);
 }
 
+char	*ft_strndup(const char *s, const size_t size)
+{
+	char	*dup;
+
+	dup = (char *)malloc((size + 1) * sizeof(char));
+	if (dup != NULL)
+		ft_strncpy(dup, (char *)s, size);
+	return (dup);
+}
+
 size_t	ft_strlenchr(const char *str, const char c)
 {
 	size_t	len;
@@ -48,27 +44,6 @@ size_t	ft_strlenchr(const char *str, const char c)
 	while (str[len] != '\0' && str[len] != c)
 		++len;
 	return (len);
-}
-
-char	*ft_strjoin(char const *s1, char const *s2)
-{
-	size_t	len1;
-	size_t	len2;
-	char	*new;
-
-	if (s1 == NULL)
-		s1 = EMPTY_STRING;
-	if (s2 == NULL)
-		s2 = EMPTY_STRING;
-	len1 = ft_strlenchr(s1, '\0');
-	len2 = ft_strlenchr(s2, '\0');
-	new = (char *)malloc((len1 + len2 + 1) + sizeof(char));
-	if (new != NULL)
-	{
-		ft_strncpy(new, (char *)s1, len1);
-		ft_strncpy(new + len1, (char *)s2, len2);
-	}
-	return (new);
 }
 
 void	ft_bzero(void *ptr, size_t size)
@@ -90,25 +65,4 @@ char	*ft_strchr(const char *s, int c)
 	if (*s == c)
 		return ((char *)s);
 	return (NULL);
-}
-
-char	*ft_strdup(const char *s)
-{
-	const size_t	len = ft_strlenchr(s, '\0');
-	char			*dup;
-
-	dup = (char *)malloc((len + 1) * sizeof(char));
-	if (dup != NULL)
-		ft_strcpy(dup, (char *)s);
-	return (dup);
-}
-
-char	*ft_strndup(const char *s, const size_t size)
-{
-	char	*dup;
-
-	dup = (char *)malloc((size + 1) * sizeof(char));
-	if (dup != NULL)
-		ft_strncpy(dup, (char *)s, size);
-	return (dup);
 }

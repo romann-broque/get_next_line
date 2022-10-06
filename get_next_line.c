@@ -6,7 +6,7 @@
 /*   By: rbroque <rbroque@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 14:10:54 by rbroque           #+#    #+#             */
-/*   Updated: 2022/10/06 16:28:32 by rbroque          ###   ########.fr       */
+/*   Updated: 2022/10/06 16:50:55 by rbroque          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,28 @@ typedef enum e_line_status
 	VALID_LINE
 }	t_line_status;
 
-void	ft_stradd(char **str, char *add)
+static char	*ft_strjoin(char const *s1, char const *s2)
+{
+	size_t	len1;
+	size_t	len2;
+	char	*new;
+
+	if (s1 == NULL)
+		s1 = EMPTY_STRING;
+	if (s2 == NULL)
+		s2 = EMPTY_STRING;
+	len1 = ft_strlenchr(s1, '\0');
+	len2 = ft_strlenchr(s2, '\0');
+	new = (char *)malloc((len1 + len2 + 1) + sizeof(char));
+	if (new != NULL)
+	{
+		ft_strncpy(new, (char *)s1, len1);
+		ft_strncpy(new + len1, (char *)s2, len2);
+	}
+	return (new);
+}
+
+static void	ft_stradd(char **str, char *add)
 {
 	char	*new;
 
@@ -28,23 +49,23 @@ void	ft_stradd(char **str, char *add)
 	*str = new;
 }
 
-t_line_status	fill_line_from_rest(char **line, char *rest)
+static t_line_status	fill_line_from_rest(char **line, char *rest)
 {
-	size_t pos;
+	size_t	pos;
 
 	if (ft_strchr(rest, '\n') != NULL)
 	{
 		pos = ft_strlenchr(rest, '\n');
 		*line = ft_strndup(rest, pos + 1);
-		ft_strcpy(rest, ft_strchr(rest, '\n') + 1);
+		ft_strncpy(rest, ft_strchr(rest, '\n') + 1, BUFFER_SIZE);
 		return (VALID_LINE);
 	}
 	else if (*rest != '\0')
-		*line = ft_strdup(rest);
+		*line = ft_strndup(rest, BUFFER_SIZE + 1);
 	return (INVALID_LINE);
 }
 
-t_line_status	fill_line_from_file(char **line,
+static t_line_status	fill_line_from_file(char **line,
 		char *rest, const int fd)
 {
 	ssize_t	read_bytes;
