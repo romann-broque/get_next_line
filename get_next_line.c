@@ -6,7 +6,7 @@
 /*   By: rbroque <rbroque@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 14:10:54 by rbroque           #+#    #+#             */
-/*   Updated: 2022/10/06 16:50:55 by rbroque          ###   ########.fr       */
+/*   Updated: 2022/10/06 18:49:34 by rbroque          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static t_line_status	fill_line_from_rest(char **line, char *rest)
 		return (VALID_LINE);
 	}
 	else if (*rest != '\0')
-		*line = ft_strndup(rest, BUFFER_SIZE + 1);
+		*line = ft_strndup(rest, BUFFER_SIZE);
 	return (INVALID_LINE);
 }
 
@@ -80,9 +80,10 @@ static t_line_status	fill_line_from_file(char **line,
 		ft_stradd(line, ft_strndup(buffer, pos + 1));
 		if (pos < read_bytes)
 		{
-			ft_strncpy(rest, buffer + pos + 1, read_bytes - pos - 1);
+			ft_strncpy(rest, buffer + pos + 1, read_bytes - pos);
 			break ;
 		}
+		ft_bzero(buffer, BUFFER_SIZE + 1);
 		read_bytes = read(fd, buffer, BUFFER_SIZE);
 	}
 	return (VALID_LINE);
