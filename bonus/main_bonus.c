@@ -6,34 +6,90 @@
 /*   By: rbroque <rbroque@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 18:34:32 by rbroque           #+#    #+#             */
-/*   Updated: 2022/10/07 22:20:36 by rbroque          ###   ########.fr       */
+/*   Updated: 2022/10/08 15:53:58 by rbroque          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 #include <stdio.h>
+#include <stdbool.h>
+
+#define FINISHED true
+#define NOT_FINISHED false
+
+typedef struct s_file_stat
+{
+	int		fd;
+	bool	status;
+}				t_file_stat;
+
+bool	display_lines(int fd, size_t n)
+{
+	size_t		i;
+	static char	*line = NULL;
+
+	if (line == NULL)	
+		line = get_next_line(fd);
+	i = 0;
+	while (line != NULL && i < n)
+	{
+		printf("%s", line);
+		free(line);
+		line = get_next_line(fd);
+		++i;
+	}
+	return (line == NULL);
+}
+
+t_file_stat	*init_f_stat(int nb_files, char **file_paths)
+{
+	t_file_stat	*f_stat;
+
+	f_stat = (t_file_stat *)malloc(nb_files * sizeof(t_file_stat));
+	if (f_stat != NULL)
+	{
+		for (int i = 0; i < nb_files; ++i)
+		{
+			f_stat[i].fd = open(file_paths[i], O_RDONLY);
+			f_stat[i].status = NOT_FINISHED;
+		}
+	}
+	return (f_stat);
+}
+
+bool	are_finished(t_file_stat *f_stat, size_t size)
+{
+	bool	are_finished;
+	size_t	i;
+
+	are_finished = FINISHED;
+	i = 0;
+	while (i < size)
+	{
+		if (f_stat[i].status == NOT_FINISHED)
+		{
+			are_finished = NOT_FINISHED;
+			break ;
+		}
+		++i;
+	}
+	return (are_finished);
+}
 
 int	main(int ac, char **av)
 {
-	int		ret_val;
-	int		fd;
-	char	*line;
+	int			ret_val;
+	t_file_stat	*f_stat;
 
 	ret_val = EXIT_SUCCESS;
-	for (int i = 1; i < ac; ++i)
+	--ac;
+	++av;
+	f_stat = init_f_stat(ac, av);
+	while (are_finished(f_stat, ac) == NOT_FINISHED)
 	{
-		if (ac == 1 || (fd = open(av[i], O_RDONLY)) == -1)
-		{
-			ret_val = EXIT_FAILURE;
-			break ;
-		}
-		line = get_next_line(fd);
-		while (line != NULL)
-		{
-			printf("%s", line);
-			free(line);
-			line = get_next_line(fd);
-		}
+		for (int i = 0; i < ac; ++i)
+			f_stat[i].status = display_lines(f_stat[i].fd, 5);
 	}
+	free(f_stat);
 	return (ret_val);
 }
