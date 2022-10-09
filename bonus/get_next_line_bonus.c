@@ -6,17 +6,11 @@
 /*   By: rbroque <rbroque@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 18:34:02 by rbroque           #+#    #+#             */
-/*   Updated: 2022/10/09 15:29:49 by rbroque          ###   ########.fr       */
+/*   Updated: 2022/10/09 15:46:00 by rbroque          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
-
-typedef enum e_line_status
-{
-	INVALID_LINE,
-	VALID_LINE
-}	t_line_status;
 
 static char	*ft_strjoin(char const *s1, char const *s2)
 {

@@ -6,17 +6,11 @@
 /*   By: rbroque <rbroque@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 14:10:54 by rbroque           #+#    #+#             */
-/*   Updated: 2022/10/09 01:47:03 by rbroque          ###   ########.fr       */
+/*   Updated: 2022/10/09 15:44:49 by rbroque          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-typedef enum e_line_status
-{
-	INVALID_LINE,
-	VALID_LINE
-}	t_line_status;
 
 static char	*ft_strjoin(char const *s1, char const *s2)
 {
@@ -91,7 +85,7 @@ static t_line_status	fill_line_from_file(char **line,
 
 char	*get_next_line(int fd)
 {
-	static char	rest[BUFFER_SIZE] = EMPTY_STRING;
+	static char	rest[BUFFER_SIZE + 1] = EMPTY_STRING;
 	char		*line;
 
 	line = NULL;

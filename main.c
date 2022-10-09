@@ -6,11 +6,14 @@
 /*   By: rbroque <rbroque@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 14:12:12 by rbroque           #+#    #+#             */
-/*   Updated: 2022/10/06 17:21:38 by rbroque          ###   ########.fr       */
+/*   Updated: 2022/10/09 15:43:32 by rbroque          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 #include <stdio.h>
 
 int	main(int ac, char **av)
@@ -27,5 +30,6 @@ int	main(int ac, char **av)
 		free(line);
 		line = get_next_line(fd);
 	}
+	close(fd);
 	return (EXIT_SUCCESS);
 }

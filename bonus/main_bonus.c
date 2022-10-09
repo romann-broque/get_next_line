@@ -6,13 +6,16 @@
 /*   By: rbroque <rbroque@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 18:34:32 by rbroque           #+#    #+#             */
-/*   Updated: 2022/10/09 15:26:09 by rbroque          ###   ########.fr       */
+/*   Updated: 2022/10/09 15:46:29 by rbroque          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 #include <stdio.h>
 #include <stdbool.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
 #define FINISHED true
 #define NOT_FINISHED false
@@ -79,6 +82,19 @@ bool	are_finished(t_file_stat *f_stat, size_t size)
 	return (are_finished);
 }
 
+void	close_fds(t_file_stat *f_stat, size_t nb_files)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < nb_files)
+	{
+		if (f_stat->fd > -1 && f_stat->fd < OPEN_MAX)
+			close(f_stat->fd);
+		++i;
+	}
+}
+
 int	main(int ac, char **av)
 {
 	int			ret_val;
@@ -91,10 +107,9 @@ int	main(int ac, char **av)
 	while (are_finished(f_stat, ac) == NOT_FINISHED)
 	{
 		for (int i = 0; i < ac; ++i)
-		{
 			f_stat[i].status = display_lines(f_stat[i].fd, INTER_LINE);
-		}
 	}
+	close_fds(f_stat, ac);
 	free(f_stat);
 	return (ret_val);
 }

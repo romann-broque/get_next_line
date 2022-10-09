@@ -6,7 +6,7 @@
 /*   By: rbroque <rbroque@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 14:09:26 by rbroque           #+#    #+#             */
-/*   Updated: 2022/10/09 02:01:56 by rbroque          ###   ########.fr       */
+/*   Updated: 2022/10/09 15:43:47 by rbroque          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,15 @@
 # include <unistd.h>
 # include <stdint.h>
 # include <stdlib.h>
-# include <sys/types.h>
-# include <sys/stat.h>
-# include <fcntl.h>
 
 # define OPEN_MAX 256
 # define EMPTY_STRING ""
+
+typedef enum e_line_status
+{
+	INVALID_LINE,
+	VALID_LINE
+}	t_line_status;
 
 char	*ft_strncpy(char *dest, char *src, size_t size);
 char	*ft_strchr(const char *s, int c);
