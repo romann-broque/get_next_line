@@ -6,7 +6,7 @@
 /*   By: rbroque <rbroque@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 18:34:15 by rbroque           #+#    #+#             */
-/*   Updated: 2022/10/07 18:34:20 by rbroque          ###   ########.fr       */
+/*   Updated: 2022/10/09 16:02:46 by rbroque          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,13 @@ char	*ft_strncpy(char *dest, char *src, size_t size)
 	return (dest);
 }
 
-char	*ft_strndup(const char *s, const size_t size)
+char	*ft_strndup(const char *s, size_t size)
 {
-	char	*dup;
+	const size_t	len = ft_strlenchr(s, '\0');
+	char			*dup;
 
+	if (size > len)
+		size = len;
 	dup = (char *)malloc((size + 1) * sizeof(char));
 	if (dup != NULL)
 		ft_strncpy(dup, (char *)s, size);
