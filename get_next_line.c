@@ -6,7 +6,7 @@
 /*   By: rbroque <rbroque@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 14:10:54 by rbroque           #+#    #+#             */
-/*   Updated: 2022/10/06 18:49:34 by rbroque          ###   ########.fr       */
+/*   Updated: 2022/10/09 01:47:03 by rbroque          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,10 @@ char	*get_next_line(int fd)
 	char		*line;
 
 	line = NULL;
-	if (fill_line_from_rest(&line, rest) == INVALID_LINE)
-		fill_line_from_file(&line, rest, fd);
+	if (fd > -1 && fd < OPEN_MAX)
+	{
+		if (fill_line_from_rest(&line, rest) == INVALID_LINE)
+			fill_line_from_file(&line, rest, fd);
+	}
 	return (line);
 }

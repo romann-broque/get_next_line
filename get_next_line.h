@@ -6,7 +6,7 @@
 /*   By: rbroque <rbroque@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 14:09:26 by rbroque           #+#    #+#             */
-/*   Updated: 2022/10/06 17:00:25 by rbroque          ###   ########.fr       */
+/*   Updated: 2022/10/09 02:01:56 by rbroque          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 
+# define OPEN_MAX 256
 # define EMPTY_STRING ""
 
 char	*ft_strncpy(char *dest, char *src, size_t size);
