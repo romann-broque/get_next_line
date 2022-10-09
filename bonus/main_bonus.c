@@ -6,7 +6,7 @@
 /*   By: rbroque <rbroque@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 18:34:32 by rbroque           #+#    #+#             */
-/*   Updated: 2022/10/09 01:07:46 by rbroque          ###   ########.fr       */
+/*   Updated: 2022/10/09 15:26:09 by rbroque          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,11 @@ bool	display_lines(int fd, size_t n)
 	size_t		i;
 	static char	*line = NULL;
 
-	if (line == NULL)
+	if (line == NULL && n > 0)
+	{
 		line = get_next_line(fd);
+		--n;
+	}
 	i = 0;
 	while (line != NULL && i < n)
 	{
@@ -89,8 +92,7 @@ int	main(int ac, char **av)
 	{
 		for (int i = 0; i < ac; ++i)
 		{
-			if (f_stat[i].status == NOT_FINISHED)
-				f_stat[i].status = display_lines(f_stat[i].fd, INTER_LINE);
+			f_stat[i].status = display_lines(f_stat[i].fd, INTER_LINE);
 		}
 	}
 	free(f_stat);

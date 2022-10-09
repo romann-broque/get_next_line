@@ -6,7 +6,7 @@
 /*   By: rbroque <rbroque@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 18:34:02 by rbroque           #+#    #+#             */
-/*   Updated: 2022/10/07 18:34:04 by rbroque          ###   ########.fr       */
+/*   Updated: 2022/10/09 15:29:49 by rbroque          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,11 +91,15 @@ static t_line_status	fill_line_from_file(char **line,
 
 char	*get_next_line(int fd)
 {
-	static char	rest[BUFFER_SIZE] = EMPTY_STRING;
-	char		*line;
+	static char		rest[(BUFFER_SIZE + 1) * OPEN_MAX] = EMPTY_STRING;
+	const size_t	offset = fd * (BUFFER_SIZE + 1) + (fd > 0);
+	char			*line;
 
 	line = NULL;
-	if (fill_line_from_rest(&line, rest) == INVALID_LINE)
-		fill_line_from_file(&line, rest, fd);
+	if (fd > -1 && fd < OPEN_MAX)
+	{
+		if (fill_line_from_rest(&line, rest + offset) == INVALID_LINE)
+			fill_line_from_file(&line, rest + offset, fd);
+	}
 	return (line);
 }
