@@ -17,7 +17,7 @@ You just have to change BUFFER_SIZE and INTER_LINE according to your interests.
 
 ## Set OPEN_MAX
 
-According to your OS, you can modify OPEN_MAX define.
-If you want to know the opened files limit that your OS can support,
+Depending on your operating system, you can modify the definition of OPEN_MAX.
+If you want to know the limit of open files that your operating system can support,
 just type the following command:
 	$ ulimit -n
