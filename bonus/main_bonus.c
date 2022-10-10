@@ -6,7 +6,7 @@
 /*   By: rbroque <rbroque@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 18:34:32 by rbroque           #+#    #+#             */
-/*   Updated: 2022/10/09 15:46:29 by rbroque          ###   ########.fr       */
+/*   Updated: 2022/10/10 02:04:23 by rbroque          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ bool	display_lines(int fd, size_t n)
 	i = 0;
 	while (line != NULL && i < n)
 	{
-		printf("%s", line);
+		printf("[%s]\n", line);
 		free(line);
 		line = get_next_line(fd);
 		++i;

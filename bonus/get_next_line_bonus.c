@@ -6,13 +6,13 @@
 /*   By: rbroque <rbroque@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 18:34:02 by rbroque           #+#    #+#             */
-/*   Updated: 2022/10/09 15:46:00 by rbroque          ###   ########.fr       */
+/*   Updated: 2022/10/10 11:09:38 by rbroque          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-static char	*ft_strjoin(char const *s1, char const *s2)
+static char	*ft_strnjoin(char const *s1, char const *s2, const size_t n)
 {
 	size_t	len1;
 	size_t	len2;
@@ -24,6 +24,8 @@ static char	*ft_strjoin(char const *s1, char const *s2)
 		s2 = EMPTY_STRING;
 	len1 = ft_strlenchr(s1, '\0');
 	len2 = ft_strlenchr(s2, '\0');
+	if (len2 > n)
+		len2 = n;
 	new = (char *)malloc((len1 + len2 + 1) + sizeof(char));
 	if (new != NULL)
 	{
@@ -33,29 +35,28 @@ static char	*ft_strjoin(char const *s1, char const *s2)
 	return (new);
 }
 
-static void	ft_stradd(char **str, char *add)
+static void	ft_strnadd(char **str, char *add, const size_t n)
 {
 	char	*new;
 
-	new = ft_strjoin(*str, add);
+	new = ft_strnjoin(*str, add, n);
 	free(*str);
-	free(add);
 	*str = new;
 }
 
-static t_line_status	fill_line_from_rest(char **line, char *rest)
+static t_line_status	get_line_from_buff(char **line, char *buffer)
 {
 	size_t	pos;
 
-	if (ft_strchr(rest, '\n') != NULL)
+	pos = ft_strlenchr(buffer, '\n');
+	if (buffer[pos] == '\n')
 	{
-		pos = ft_strlenchr(rest, '\n');
-		*line = ft_strndup(rest, pos + 1);
-		ft_strncpy(rest, ft_strchr(rest, '\n') + 1, BUFFER_SIZE);
+		ft_strnadd(line, buffer, pos + 1);
+		ft_strncpy(buffer, buffer + pos + 1, BUFFER_SIZE);
 		return (VALID_LINE);
 	}
-	else if (*rest != '\0')
-		*line = ft_strndup(rest, BUFFER_SIZE);
+	else if (*buffer != '\0')
+		ft_strnadd(line, buffer, BUFFER_SIZE);
 	return (INVALID_LINE);
 }
 
@@ -63,23 +64,22 @@ static t_line_status	fill_line_from_file(char **line,
 		char *rest, const int fd)
 {
 	ssize_t	read_bytes;
-	ssize_t	pos;
 	char	buffer[BUFFER_SIZE + 1];
 
 	ft_bzero(buffer, BUFFER_SIZE + 1);
 	read_bytes = read(fd, buffer, BUFFER_SIZE);
 	while (read_bytes > 0)
 	{
-		pos = ft_strlenchr(buffer, '\n');
-		ft_stradd(line, ft_strndup(buffer, pos + 1));
-		if (pos < read_bytes)
+		if (get_line_from_buff(line, buffer) == VALID_LINE)
 		{
-			ft_strncpy(rest, buffer + pos + 1, read_bytes - pos);
+			ft_strncpy(rest, buffer, read_bytes);
 			break ;
 		}
 		ft_bzero(buffer, BUFFER_SIZE + 1);
 		read_bytes = read(fd, buffer, BUFFER_SIZE);
 	}
+	if (read_bytes == -1)
+		return (INVALID_LINE);
 	return (VALID_LINE);
 }
 
@@ -92,7 +92,7 @@ char	*get_next_line(int fd)
 	line = NULL;
 	if (fd > -1 && fd < OPEN_MAX)
 	{
-		if (fill_line_from_rest(&line, rest + offset) == INVALID_LINE)
+		if (get_line_from_buff(&line, rest + offset) == INVALID_LINE)
 			fill_line_from_file(&line, rest + offset, fd);
 	}
 	return (line);
