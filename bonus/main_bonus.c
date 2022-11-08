@@ -6,7 +6,7 @@
 /*   By: rbroque <rbroque@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 18:34:32 by rbroque           #+#    #+#             */
-/*   Updated: 2022/10/10 02:04:23 by rbroque          ###   ########.fr       */
+/*   Updated: 2022/11/08 10:14:27 by rbroque          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@
 
 #define FINISHED true
 #define NOT_FINISHED false
+#ifndef INTER_LINE
+#  define INTER_LINE 1
+#endif
 
 typedef struct s_file_stat
 {
