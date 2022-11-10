@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbroque <rbroque@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/07 18:33:46 by rbroque           #+#    #+#             */
-/*   Updated: 2022/10/10 14:57:59 by rbroque          ###   ########.fr       */
+/*   Created: 2022/11/10 15:12:33 by rbroque           #+#    #+#             */
+/*   Updated: 2022/11/10 15:14:11 by rbroque          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,11 @@
 
 # include <unistd.h>
 # include <stdint.h>
+# include <limits.h>
+# include <stdio.h>
 # include <stdlib.h>
 
-# define OPEN_MAX 256
-# define EMPTY_STRING ""
+# define OPEN_MAX FOPEN_MAX
 
 typedef enum e_line_status
 {
