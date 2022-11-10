@@ -6,7 +6,7 @@
 /*   By: rbroque <rbroque@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 15:12:24 by rbroque           #+#    #+#             */
-/*   Updated: 2022/11/10 15:14:24 by rbroque          ###   ########.fr       */
+/*   Updated: 2022/11/10 16:44:05 by rbroque          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,7 @@ char	*get_next_line(int fd)
 	char	*line;
 
 	line = NULL;
-	if (fd > -1 && fd < OPEN_MAX
-		&& OPEN_MAX > 0 && BUFFER_SIZE <= INT_MAX / OPEN_MAX)
+	if (fd > -1 && fd < OPEN_MAX)
 		get_line(fd, &line);
 	return (line);
 }
