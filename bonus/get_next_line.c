@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbroque <rbroque@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/07 18:34:02 by rbroque           #+#    #+#             */
-/*   Updated: 2022/10/10 15:23:44 by rbroque          ###   ########.fr       */
+/*   Created: 2022/10/10 15:00:02 by rbroque           #+#    #+#             */
+/*   Updated: 2022/11/10 15:03:40 by rbroque          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line_bonus.h"
+#include "get_next_line.h"
 
 static t_line_status	get_line_from_buff(char **line, char *buffer)
 {
@@ -48,17 +48,20 @@ static t_line_status	fill_line_from_file(char **line,
 	return (VALID_LINE);
 }
 
+static void	get_line(int fd, char **line)
+{
+	static char		rest[OPEN_MAX][BUFFER_SIZE + 1] = {0};
+
+	if (get_line_from_buff(line, rest[fd]) == INVALID_LINE)
+		fill_line_from_file(line, rest[fd], fd);
+}
+
 char	*get_next_line(int fd)
 {
-	static char		rest[(BUFFER_SIZE + 1) * OPEN_MAX] = EMPTY_STRING;
-	const size_t	offset = fd * (BUFFER_SIZE + 1);
-	char			*line;
+	char	*line;
 
 	line = NULL;
-	if (fd > -1 && fd < OPEN_MAX)
-	{
-		if (get_line_from_buff(&line, rest + offset) == INVALID_LINE)
-			fill_line_from_file(&line, rest + offset, fd);
-	}
+	if (fd > -1 && fd < OPEN_MAX && OPEN_MAX > 0 && BUFFER_SIZE <= INT_MAX / OPEN_MAX)
+		get_line(fd, &line);
 	return (line);
 }

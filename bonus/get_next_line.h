@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbroque <rbroque@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/07 18:33:46 by rbroque           #+#    #+#             */
-/*   Updated: 2022/11/08 10:14:32 by rbroque          ###   ########.fr       */
+/*   Created: 2022/10/10 15:00:22 by rbroque           #+#    #+#             */
+/*   Updated: 2022/11/10 14:57:41 by rbroque          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_BONUS_H
-# define GET_NEXT_LINE_BONUS_H
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
 # include <unistd.h>
 # include <stdint.h>
+# include <limits.h>
+# include <stdio.h>
 # include <stdlib.h>
 
-# define OPEN_MAX 256
-# define EMPTY_STRING ""
+# define OPEN_MAX FOPEN_MAX
 
 typedef enum e_line_status
 {
