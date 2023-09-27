@@ -1,19 +1,19 @@
 ## get_next_line
 
-A useful function returning the last read line from a file descriptor (with, if there is, the \n). Returns NULL if the file is over or if there is an error.
+### 📜 Project Overview
 
-### Project Description
+The `get_next_line` project is an essential tool for C programmers. It provides a function for reading one line at a time from a file descriptor, offering a deep dive into file I/O in the C programming language.
 
-The `get_next_line` project is a vital component in any C programmer's toolkit. It's a function that reads a single line from a file descriptor each time it's called. This project is not only about reading lines but also about understanding the intricacies of file I/O in the C programming language.
+### 🌟 Key Features
 
-### Features
+- Efficiently reads text from files or streams, one line at a time.
+- Supports multiple file descriptors simultaneously.
+- Handles memory allocation dynamically.
+- Ensures modular and maintainable code.
 
-- Reads text from a file or stream, one line at a time.
-- Handles multiple file descriptors concurrently.
-- Efficient memory management with dynamic memory allocation.
-- Adheres to SOLID principles, ensuring modular and maintainable code.
+### 🚀 How to Use
 
-### 🚀 Usage
+To use `get_next_line`, follow these steps:
 
 1. Include the `get_next_line` function in your C project.
 2. Call the function with a file descriptor to read lines from it.
@@ -35,30 +35,32 @@ int main() {
 }
 ```
 
-### 🚀 Compiling
+### 🛠️ Compilation
 
-#### CLASSIC Part
+#### Standard Configuration
+
+To compile with default settings, use the following command:
 
 ```shell
 $ clang -Wall -Werror -Wextra *.c -D BUFFER_SIZE=8
 ```
 
-You just have to change BUFFER_SIZE according to your interests.
+You can modify BUFFER_SIZE as needed.
 
-#### BONUS Part
+#### Additional Features 🚀
+
+For extra features, compile with this command:
 
 ```shell
 $ clang -Wall -Werror -Wextra *.c -D BUFFER_SIZE=8 -D INTER_LINE=5
 ```
 
-You just have to change BUFFER_SIZE and INTER_LINE according to your interests.
+You can customize both BUFFER_SIZE and INTER_LINE.
 
-### Set OPEN_MAX
+### 💡 Additional Information
 
-Depending on your operating system, you can modify the definition of OPEN_MAX. If you want to know the limit of open files that your operating system can support, just type the following command:
+Depending on your operating system, you may need to adjust the definition of OPEN_MAX. To find the limit of open files your operating system can support, use the following command:
 
 ```shell
 $ ulimit -n
 ```
-
-With these additional details, users will have a better understanding of how to compile the `get_next_line` project with different settings and how to set OPEN_MAX according to their operating system's capabilities.
